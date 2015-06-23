@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+	<head>
+		<meta charset="utf-8">
+		<title>Smart Button Demo</title>
+		<link rel="stylesheet" type="text/css" href="../dist/sb.css">
+	</head>
+
+	<body ng-controller="mainCtrl">
+		<div>
+			<sb mode="mode"></sb>
+		</div>
+
+		<script type="text/javascript" src="../bower_components/angular/angular.js"></script>
+		<script type="text/javascript" src="../dist/sb.js"></script>
+		<script type="text/javascript">
+
+			angular
+			.module('demo', ['ngSb'])
+			.controller('mainCtrl', ['$scope', function ($scope) {
+				$scope.mode = 'hello';
+			}]);
+
+		</script>
+	</body>
+</html>

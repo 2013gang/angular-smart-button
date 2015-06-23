@@ -1,0 +1,21 @@
+{
+  "name": "angular-smart-button",
+  "version": "0.0.0",
+  "authors": [
+    "2013gangli@gmail.com"
+  ],
+  "description": "Button with various customized functionalities",
+  "keywords": [
+    "angular",
+    "button",
+    "customized"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
