@@ -1,6 +1,6 @@
 # angular-smart-button
 
-[build]: https://travis-ci.org/2013gang/angular-smart-button.svg?branch=master&style=flat-square
+[build]: https://travis-ci.org/2013gang/angular-smart-button.svg?branch=master
 
 Debounced button to avoid double click
 
