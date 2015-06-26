@@ -1,17 +1,28 @@
 (function() {
   angular.module('ngSb', ['sbTemplate']).constant('sbDefaults', {
-    bufferSize: 10
+    bufferSize: 10,
+    defaultWait: 2000
   }).directive('sb', [
     '$log', 'sbDefaults', function($log, sbDefaults) {
       return {
         restrict: 'E',
-        templatUrl: 'sbTemplate.html',
+        templateUrl: 'sbTemplate.html',
         scope: {
-          mode: '='
+          mode: '=',
+          action: '&'
         },
         compile: function(ele, attr) {
+          var timeout;
+          timeout = null;
           return {
-            pre: function(scope, ele, attr) {},
+            pre: function(scope, ele, attr) {
+              return ele.on('click', function(ev) {
+                console.log('on click');
+                clearTimeout(timeout);
+                timeout = setTimeout(scope.action(), sbDefaults.defaultWait);
+                return ev.preventDefault();
+              });
+            },
             post: function(scope, ele, attr) {}
           };
         }

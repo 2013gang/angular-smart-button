@@ -73,6 +73,15 @@ gulp.task 'srcOrTemplateTask', ->
 gulp.task 'default', ['watch'], (cb) ->
 	runSequence 'html2js', ['styles', 'scripts'], 'clean', cb
 
+gulp.task 'test', ->
+	gulp.src './foobar'
+		.pipe $.karma
+			configFile: 'karma.conf.js',
+			action: 'run'
+		.on 'error', (err) ->
+			console.log err
+			this.emit 'end'
+
 gulp.task 'clean', ->
 	gulp.src ['*.tmp', 'src/*.js', 'src/*.css'],
 		read: false

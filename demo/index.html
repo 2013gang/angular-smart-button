@@ -8,7 +8,7 @@
 
 	<body ng-controller="mainCtrl">
 		<div>
-			<sb mode="mode"></sb>
+			<sb mode="mode" action="action"></sb>
 		</div>
 
 		<script type="text/javascript" src="../bower_components/angular/angular.js"></script>
@@ -19,6 +19,7 @@
 			.module('demo', ['ngSb'])
 			.controller('mainCtrl', ['$scope', function ($scope) {
 				$scope.mode = 'hello';
+				$scope.action = function() {console.log('Am I debounced?!');};
 			}]);
 
 		</script>
