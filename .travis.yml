@@ -7,3 +7,5 @@ before_install:
   - bower install
 script:
  - gulp test
+ after_script:  
+ - gulp coveralls

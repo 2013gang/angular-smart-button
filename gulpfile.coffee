@@ -82,6 +82,12 @@ gulp.task 'test', ->
 			console.log err
 			this.emit 'end'
 
+gulp.task 'coveralls', ->
+	if !process.env.CI
+		return
+	gulp.src './coverage/*/lcov.info'
+		.pipe do $.coveralls
+
 gulp.task 'clean', ->
 	gulp.src ['*.tmp', 'src/*.js', 'src/*.css'],
 		read: false
