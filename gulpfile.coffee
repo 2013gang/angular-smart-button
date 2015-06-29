@@ -83,8 +83,6 @@ gulp.task 'test', ->
 			this.emit 'end'
 
 gulp.task 'coveralls', ->
-	if !process.env.CI
-		return
 	gulp.src './coverage/*/lcov.info'
 		.pipe do $.coveralls
 
