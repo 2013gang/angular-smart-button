@@ -5,11 +5,11 @@
 
 ![Demo](http://g.recordit.co/MB0jERuPic.gif)
 
-Debounced button to avoid double click
+- Debounced button to avoid double click
 
-Disabled button until promise resovled
+- Disabled button until promise resovled
 
-Button actions buffering queue
+- Button actions buffering queue
 
 
 No other dependencies
