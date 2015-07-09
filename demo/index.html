@@ -4,22 +4,166 @@
 		<meta charset="utf-8">
 		<title>Smart Button Demo</title>
 		<link rel="stylesheet" type="text/css" href="../dist/sb.css">
+		<style>
+			body {background-color:lightgray}
+			h1   {color:blue}
+			p    {color:green}
+			button.smart-button {
+				width: 150px;
+				-webkit-transition: all 0s ease-out;
+				-moz-transition: all 0s ease-out;
+				-o-transition: all 0s ease-out;
+				-ms-transition: all 0s ease-out;
+				transition: all 0s ease-out;
+				height: 35px;
+				display: block;
+				font-family: Arial, "Helvetica", sans-serif;
+				font-size: 14px;
+				color: #fff;
+				text-decoration: none;
+				text-align: center;
+				text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+				padding: 4px 20px 0;
+				margin: 10px auto;
+				left: 30px;
+				position: relative;
+				cursor: pointer;
+				border: none;
+				border-top-right-radius: 5px;
+				border-bottom-right-radius: 5px;
+			}
+
+			button.DE {
+				border-left: solid 1px #269BD0;
+				background: #46C1F6;
+
+				-webkit-box-shadow: 0px 5px 0px 0px #269BD0;
+				box-shadow: 0px 5px 0px 0px #269BD0;
+			}
+
+			button.WA {
+				border-left: solid 1px #269BD0;
+				background: #46C1F6;
+
+				-webkit-box-shadow: 0px 5px 0px 0px #269BD0;
+				box-shadow: 0px 5px 0px 0px #269BD0;
+			}
+
+			button.WA:disabled {
+				border-left: solid 1px #269BD0;
+				background: gray;
+
+				-webkit-box-shadow: 0px 5px 0px 0px #269BD0;
+				box-shadow: 0px 5px 0px 0px #269BD0;
+			}
+
+			button.QU {
+				border-left: solid 1px #269BD0;
+				background: #46C1F6;
+
+				-webkit-box-shadow: 0px 5px 0px 0px #269BD0;
+				box-shadow: 0px 5px 0px 0px #269BD0;
+			}
+
+			button.smart-button:active {
+				top: 3px;
+			}
+
+			button.DE:active {
+				-webkit-box-shadow: 0px 2px 0px 0px #2E4476;
+				box-shadow: 0px 2px 0px 0px #2E4476;
+			}
+
+			button.WA:active {
+				-webkit-box-shadow: 0px 2px 0px 0px #269BD0;
+				box-shadow: 0px 2px 0px 0px #269BD0;
+			}
+
+			button.QU:active {
+				-webkit-box-shadow: 0px 2px 0px 0px #C02B21;
+				box-shadow: 0px 2px 0px 0px #C02B21;
+			}
+
+
+
+			button.smart-button:active:before {
+				top: -3px;
+			}
+
+			button.DE:active:before {
+				-webkit-box-shadow: 0px 5px 0px 0px #2E4476, 6px 4px 2px rgba(0,0,0,0.3);
+				box-shadow: 0px 5px 0px 0px #2E4476, 6px 4px 2px rgba(0,0,0,0.3);
+			}
+
+			button.WA:active:before {
+				-webkit-box-shadow: 0px 5px 0px 0px #269BD0, 6px 4px 2px rgba(0,0,0,0.3);
+				box-shadow: 0px 5px 0px 0px #269BD0, 6px 4px 2px rgba(0,0,0,0.3);
+			}
+
+			button.QU:active:before {
+				-webkit-box-shadow: 0px 5px 0px 0px #C02B21, 6px 4px 2px rgba(0,0,0,0.3);
+				box-shadow: 0px 5px 0px 0px #C02B21, 6px 4px 2px rgba(0,0,0,0.3);
+			}
+		</style>
 	</head>
 
 	<body ng-controller="mainCtrl">
 		<div>
-			<sb mode="mode" action="action"></sb>
+			<sb mode="{{mode1}}" action="action1" text="text1"></sb>
+			
 		</div>
-
+		<div>
+			<sb mode="{{mode2}}" action="action2" text="text2"></sb>
+		</div>
+		<div>
+			<sb mode="{{mode3}}" action="action3" text="text3" queue="queue"></sb>
+			
+		</div>
+		<div style="position: relative;
+  left: 30%;
+  width: 400px;
+  overflow: auto;">
+			<div>Clicked: {{clicked}}</divn>
+			<div>Request queue: {{queue}}</div>
+		</div>
 		<script type="text/javascript" src="../bower_components/angular/angular.js"></script>
 		<script type="text/javascript" src="../dist/sb.js"></script>
 		<script type="text/javascript">
 
 			angular
 			.module('demo', ['ngSb'])
-			.controller('mainCtrl', ['$scope', function ($scope) {
-				$scope.mode = 'hello';
-				$scope.action = function() {console.log('Am I debounced?!');};
+			.controller('mainCtrl', ['$scope', '$q', '$timeout', function ($scope, $q, $timeout) {
+				$scope.mode1 = 'DE';
+				$scope.text1 = 'debounce';
+				$scope.clicked = [];
+				$scope.mode2 = 'WA';
+				$scope.text2 = 'promise';
+				$scope.action1 = function () {
+					console.log('Am I debounced?!');
+					$scope.clicked.push(new Date().getTime());
+					$scope.$apply();
+				};
+				$scope.action2 = function () {
+					var waitFor = $q.defer();
+					console.log('Busy processing things, please wait');
+					$timeout(function () {
+						waitFor.notify('About to finish my job, be patient');
+						waitFor.resolve('Done!');
+					}, 2000);
+					return waitFor.promise;
+				};
+
+				$scope.mode3 = 'QU';
+				$scope.text3 = 'queue';
+				$scope.action3 = function () {
+					var waitFor = $q.defer();
+					console.log('Busy processing things, please wait for the queue to be finished!');
+					$timeout(function () {
+						waitFor.notify('About to finish my job, be patient');
+						waitFor.resolve('Done!');
+					}, 2000 + 3000 * Math.random());
+					return waitFor.promise;
+				};
 			}]);
 
 		</script>
