@@ -12,7 +12,5 @@
 - Button actions buffering queue
 
 
-No other dependencies
-
 More to come~
 
