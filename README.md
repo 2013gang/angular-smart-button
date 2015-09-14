@@ -11,6 +11,4 @@
 
 - Button actions buffering queue
 
-
-More to come~
-
+stop working on this because [this] (https://github.com/pc035860/ngQueue) could have already achieve what is in my mind.
